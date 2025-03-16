@@ -1,0 +1,59 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Dispositivo já está configurado",
+            "media_type_already_configured": "Este tipo de mídia já está configurado"
+        },
+        "error": {
+            "media_type_genre_already_configured": "Este tipo de mídia com estes gêneros já está configurado"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "name": "Nome",
+                    "limit": "Número de itens para mostrar",
+                    "media_type": "Tipo de mídia",
+                    "genres": "Gêneros",
+                    "scan_interval": "Intervalo de atualização (segundos)"
+                },
+                "description": "Configure a integração Stremio para mostrar conteúdo do Stremio no seu Home Assistant."
+            }
+        }
+    },
+    "options": {
+        "error": {
+            "media_type_genre_already_configured": "Este tipo de mídia com estes gêneros já está configurado"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "limit": "Número de itens para mostrar",
+                    "media_type": "Tipo de mídia",
+                    "genres": "Gêneros",
+                    "scan_interval": "Intervalo de atualização (segundos)"
+                },
+                "description": "Configure as opções da integração Stremio."
+            }
+        }
+    },
+    "selector": {
+        "media_type": {
+            "options": {
+                "movie": "Filmes",
+                "series": "Séries de TV"
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "stremio": {
+                "name": "Stremio {media_type}"
+            }
+        }
+    },
+    "component": {
+        "stremio": {
+            "genre_format": "{genre}"
+        }
+    }
+}

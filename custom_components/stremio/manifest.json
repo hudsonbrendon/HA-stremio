@@ -1,0 +1,20 @@
+{
+  "domain": "stremio",
+  "name": "Stremio",
+  "codeowners": [
+    "@hudsonbrendon"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/hudsonbrendon/HA-stremio",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/hudsonbrendon/HA-stremio/issues",
+  "requirements": [
+    "voluptuous>=0.12.0"
+  ],
+  "version": "0.2.1",
+  "translations": [
+    "pt-BR"
+  ],
+  "single_instance_allowed": false
+}

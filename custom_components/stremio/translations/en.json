@@ -1,0 +1,52 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Configure the Stremio integration to show content from Stremio in your Home Assistant.",
+                "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "name": "Name",
+                    "limit": "Number of items to show",
+                    "media_type": "Media type",
+                    "genres": "Genres",
+                    "scan_interval": "Scan interval (seconds)"
+                }
+            }
+        },
+        "error": {
+            "auth": "Username/Password is wrong.",
+            "connection": "Unable to connect to the server.",
+            "unknown": "Unknown error occurred.",
+            "media_type_genre_already_configured": "This media type with these genres is already configured"
+        },
+        "abort": {
+            "already_configured": "Device is already configured",
+            "media_type_already_configured": "This media type is already configured"
+        }
+    },
+    "options": {
+        "error": {
+            "media_type_genre_already_configured": "This media type with these genres is already configured"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "limit": "Number of items to show",
+                    "media_type": "Media type",
+                    "genres": "Genres",
+                    "scan_interval": "Scan interval (seconds)"
+                },
+                "description": "Configure the Stremio integration options."
+            }
+        }
+    },
+    "selector": {
+        "media_type": {
+            "options": {
+                "movie": "Movies",
+                "series": "TV Series"
+            }
+        }
+    }
+}

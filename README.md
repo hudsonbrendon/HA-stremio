@@ -1,46 +1,85 @@
-# Notice
+# Stremio Integration for Home Assistant
 
-The component and platforms in this repository are not meant to be used by a
-user, but as a "blueprint" that custom component developers can build
-upon, to make more awesome stuff.
+This integration allows you to display top movies from Stremio in Home Assistant. It is designed to work with the [upcoming-media-card](https://github.com/custom-cards/upcoming-media-card).
 
-HAVE FUN! 😎
+## Features
 
-## Why?
+- Fetches top movies from Stremio's Cinemeta API
+- Filter movies by genres (Action, Comedy, Drama, etc.)
+- Provides movie information in a format compatible with the upcoming-media-card
+- Configurable number of movies to display
 
-This is simple, by having custom_components look (README + structure) the same
-it is easier for developers to help each other and for users to start using them.
+## Installation
 
-If you are a developer and you want to add things to this "blueprint" that you think more
-developers will have use for, please open a PR to add it :)
+### HACS (Recommended)
 
-## What?
+1. Make sure [HACS](https://hacs.xyz/) is installed
+2. Add this repository as a custom repository in HACS
+3. Search for "Stremio" in HACS integrations
+4. Install the integration
 
-This repository contains multiple files, here is a overview:
+### Manual Installation
 
-File | Purpose | Documentation
--- | -- | --
-`.devcontainer.json` | Used for development/testing with Visual Studio Code. | [Documentation](https://code.visualstudio.com/docs/remote/containers)
-`.github/ISSUE_TEMPLATE/*.yml` | Templates for the issue tracker | [Documentation](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
-`custom_components/integration_blueprint/*` | Integration files, this is where everything happens. | [Documentation](https://developers.home-assistant.io/docs/creating_component_index)
-`CONTRIBUTING.md` | Guidelines on how to contribute. | [Documentation](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors)
-`LICENSE` | The license file for the project. | [Documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository)
-`README.md` | The file you are reading now, should contain info about the integration, installation and configuration instructions. | [Documentation](https://help.github.com/en/github/writing-on-github/basic-writing-and-formatting-syntax)
-`requirements.txt` | Python packages used for development/lint/testing this integration. | [Documentation](https://pip.pypa.io/en/stable/user_guide/#requirements-files)
+1. Copy the `custom_components/stremio` directory to your Home Assistant `custom_components` directory
+2. Restart Home Assistant
 
-## How?
+## Configuration
 
-1. Create a new repository in GitHub, using this repository as a template by clicking the "Use this template" button in the GitHub UI.
-1. Open your new repository in Visual Studio Code devcontainer (Preferably with the "`Dev Containers: Clone Repository in Named Container Volume...`" option).
-1. Rename all instances of the `integration_blueprint` to `custom_components/<your_integration_domain>` (e.g. `custom_components/awesome_integration`).
-1. Rename all instances of the `Integration Blueprint` to `<Your Integration Name>` (e.g. `Awesome Integration`).
-1. Run the `scripts/develop` to start HA and test out your new integration.
+### Using the UI
 
-## Next steps
+1. Go to **Settings** > **Devices & Services**
+2. Click **+ Add Integration** and search for "Stremio"
+3. Follow the configuration steps
+   - Set a name for the integration
+   - Choose the number of movies to display (limit)
+   - Select one or more genres (optional)
+   - Set the update interval
 
-These are some next steps you may want to look into:
-- Add tests to your integration, [`pytest-homeassistant-custom-component`](https://github.com/MatthewFlamm/pytest-homeassistant-custom-component) can help you get started.
-- Add brand images (logo/icon) to https://github.com/home-assistant/brands.
-- Create your first release.
-- Share your integration on the [Home Assistant Forum](https://community.home-assistant.io/).
-- Submit your integration to [HACS](https://hacs.xyz/docs/publish/start).
+### Using Configuration.yaml
+
+Add the following to your `configuration.yaml`:
+
+```yaml
+sensor:
+  - platform: stremio
+    name: stremio_top_movies
+    limit: 10  # Optional, default is 10
+    genres:  # Optional, creates a sensor for each genre
+      - Action
+      - Comedy
+      - Drama
+    scan_interval: 3600  # Optional, default is 1 hour (3600 seconds)
+```
+
+## Using with upcoming-media-card
+
+Add a card configuration like this to your Lovelace UI:
+
+```yaml
+type: custom:upcoming-media-card
+entity: sensor.stremio_top_movies
+title: Top Movies on Stremio
+```
+
+If you've configured genre sensors, you can display them individually:
+
+```yaml
+type: custom:upcoming-media-card
+entity: sensor.stremio_top_movies_action
+title: Top Action Movies
+```
+
+## Troubleshooting
+
+Enable debug logging in your `configuration.yaml`:
+
+```yaml
+logger:
+  default: info
+  logs:
+    custom_components.stremio: debug
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request.

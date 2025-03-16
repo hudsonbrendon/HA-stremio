@@ -51,17 +51,9 @@ class StremioConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     break
 
             if not errors:
-                # Create title based on media type
+                # Create title based on media type only, without adding genres
                 media_type_name = MEDIA_TYPES.get(media_type, media_type.capitalize())
-
-                # Add genre info to title if genres are specified
-                if user_input[CONF_GENRES]:
-                    genres_names = [
-                        GENRE_TRANSLATIONS.get(g, g) for g in user_input[CONF_GENRES]
-                    ]
-                    title = f"Stremio {media_type_name} {' '.join(genres_names)}"
-                else:
-                    title = f"Stremio {media_type_name}"
+                title = f"Stremio {media_type_name}"
 
                 return self.async_create_entry(
                     title=title,

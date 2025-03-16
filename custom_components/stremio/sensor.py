@@ -286,6 +286,16 @@ class StremioSensor(SensorEntity):
         if backdrop and not backdrop.startswith(("http:", "https:")):
             backdrop = f"https:{backdrop}"
 
+        # Handle director field - ensure it's a list before joining
+        directors = item.get("director", ["Desconhecido"])
+        if not isinstance(directors, list):
+            directors = [str(directors)] if directors else ["Desconhecido"]
+
+        # Handle genre field - ensure it's a list before joining
+        genres = item.get("genre", [])
+        if not isinstance(genres, list):
+            genres = [str(genres)] if genres else []
+
         # Basic item info
         result = {
             "airdate": now.strftime("%Y-%m-%d"),
@@ -297,10 +307,8 @@ class StremioSensor(SensorEntity):
             "runtime": item.get("runtime", 0),
             "rating": item.get("imdbRating", 0),
             "year": year,
-            "studio": ", ".join(item.get("director", ["Desconhecido"])),
-            "genres": ", ".join(
-                [GENRE_TRANSLATIONS.get(g, g) for g in item.get("genre", [])]
-            ),
+            "studio": ", ".join(directors),
+            "genres": ", ".join([GENRE_TRANSLATIONS.get(g, g) for g in genres]),
             "plot": item.get("description", ""),
         }
 

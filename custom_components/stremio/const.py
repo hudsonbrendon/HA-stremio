@@ -32,6 +32,12 @@ MEDIA_TYPES = {
     "series": "Séries",
 }
 
+# Entity display names for media types
+ENTITY_DISPLAY_NAMES = {
+    "movie": "Stremio Filmes",
+    "series": "Stremio Séries",
+}
+
 # Available genres
 AVAILABLE_GENRES = [
     "Action",

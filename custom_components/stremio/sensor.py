@@ -206,16 +206,22 @@ class StremioSensor(SensorEntity):
                     _LOGGER.error("Erro formatando item %s: %s", item.get("name"), err)
 
             self._state = len(card_items)
-            self._attributes["data"] = card_items
-            self._attributes["media_type"] = self._media_type
+
+            # Set up attributes in the exact structure upcoming-media-card expects
+            self._attributes = {
+                "data": card_items,
+                "media_type": self._media_type,
+                "count": len(card_items),
+            }
 
             # Add genre information to attributes if we're filtering
             if self._genre:
                 self._attributes["genre"] = self._genre
-                self._attributes["genre_pt"] = GENRE_TRANSLATIONS.get(
+                self._attributes["genre_name"] = GENRE_TRANSLATIONS.get(
                     self._genre, self._genre
                 )
 
+            # Log successful update
             media_type_name = MEDIA_TYPES.get(self._media_type, self._media_type)
             genre_info = (
                 f" no gênero {GENRE_TRANSLATIONS.get(self._genre, self._genre)}"
@@ -270,6 +276,7 @@ class StremioSensor(SensorEntity):
         self, item: dict[str, Any]
     ) -> dict[str, Any]:
         """Format item data for upcoming-media-card."""
+        poster = item.get("poster", "")
         # Extract the year from the ID (format: tt123456:year)
         item_id_parts = item.get("id", "").split(":")
         year = item_id_parts[1] if len(item_id_parts) > 1 else None
@@ -278,7 +285,6 @@ class StremioSensor(SensorEntity):
         now = dt_util.now()
 
         # Format the poster URLs
-        poster = item.get("poster", "")
         if poster and not poster.startswith(("http:", "https:")):
             poster = f"https:{poster}"
 
@@ -319,6 +325,15 @@ class StremioSensor(SensorEntity):
                     "episode": item.get("episodeCount", 1),
                     "seasons": item.get("seasonCount", 1),
                     "status": item.get("status", "Finalizada"),
+                }
+            )
+
+        else:
+            # For movies
+            result.update(
+                {
+                    "in_cinemas": year,
+                    "release_date": year,
                 }
             )
 

@@ -72,11 +72,13 @@ Sensor naming examples:
 
 ## Using with upcoming-media-card
 
-Add a card configuration like this to your Lovelace UI:
+First, install the [upcoming-media-card](https://github.com/custom-cards/upcoming-media-card) from HACS.
+
+Then add a card configuration like this to your Lovelace UI:
 
 ```yaml
 type: custom:upcoming-media-card
-entity: sensor.all
+entity: sensor.todos
 title: Top Movies on Stremio
 ```
 
@@ -84,8 +86,23 @@ For genre-specific sensors:
 
 ```yaml
 type: custom:upcoming-media-card
-entity: sensor.action
+entity: sensor.acao
 title: Top Action Movies
+```
+
+You can customize the card appearance:
+
+```yaml
+type: custom:upcoming-media-card
+entity: sensor.todos
+title: Top Movies on Stremio
+max: 10                    # Maximum number of items to show
+image_style: fanart        # Options: poster, fanart, none
+line1_text: title          # First line of text
+line2_text: release        # Second line of text
+line3_text: genres         # Third line of text
+line4_text: rating         # Fourth line of text
+title_text: $title         # Title to display when expanded
 ```
 
 ## Sensor Attributes
